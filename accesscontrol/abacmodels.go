@@ -7,13 +7,13 @@
 
 package accesscontrol
 
-type Submodels struct {
+type SubModels struct {
 	Age   int
 	Group string
 }
 
 type AbacModels struct {
-	submodels Submodels
-	obj       string
-	act       string
+	SubModel SubModels
+	Obj      string
+	Act      string
 }

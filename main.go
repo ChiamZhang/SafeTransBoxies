@@ -38,13 +38,29 @@ func main() {
 		fmt.Println("非 root 用户执行.")
 	}
 
-	//--------------features chanage------------------//
+	//--------------授权演示------------------//
+
 	requesterSlice := []accesscontrol.AccessRequester{}
-	casbinAbacRequester := accesscontrol.CasbinAbacRequester{}
-	requesterSlice = append(requesterSlice, &casbinAbacRequester)
-	ok, err := accesscontrol.GetPermission(requesterSlice)
+
+	casbinAbacRequester := accesscontrol.CasbinAbacRequester{
+		AbacModels: accesscontrol.AbacModels{
+			SubModel: accesscontrol.SubModels{
+				Age:   19,
+				Group: "admin",
+			},
+			Obj: "document",
+			Act: "write",
+		},
+	}
+	err = casbinAbacRequester.InitChecker()
 	if err != nil {
 		print(err)
+	}
+	requesterSlice = append(requesterSlice, &casbinAbacRequester)
+
+	ok, err := accesscontrol.GetPermission(requesterSlice)
+	if err != nil {
+		print((err))
 	} else if ok {
 		print("授权成功")
 	} else {

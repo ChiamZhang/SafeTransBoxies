@@ -30,7 +30,7 @@
 //
 //// CheckPermission 用于检查是否允许访问
 //// 后期可以根据需求更改
-//func CheckPermission(sub Submodels, obj, act string) (bool, error) {
+//func CheckPermission(sub Submodel, obj, act string) (bool, error) {
 //	ok, err := Enforcer.Enforce(sub, obj, act)
 //	return ok, err
 //}

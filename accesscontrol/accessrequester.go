@@ -13,6 +13,7 @@ import "github.com/casbin/casbin/v2"
 // @Description: 所有访问控制的实现的接口，实现方式按照CasbinAbac的方式实现即可完成功能的添加
 type AccessRequester interface {
 	CheckAccessPermission() (bool, error)
+	InitChecker() error
 }
 
 // CasbinAbacRequester
@@ -31,8 +32,8 @@ type CasbinAbacRequester struct {
 	AbacModels AbacModels
 }
 
-// InitCasbin 初始化 Casbin 执行者
-func (c *CasbinAbacRequester) InitCasbin() error {
+// InitChecker 初始化 Casbin 执行者
+func (c *CasbinAbacRequester) InitChecker() error {
 	var err error
 	// CasbinModelPath 是模型配置文件的路径
 	c.CasbinModelPath = "./accesscontrol/config/model.conf"
@@ -45,7 +46,7 @@ func (c *CasbinAbacRequester) InitCasbin() error {
 // CheckPermission 用于检查是否允许访问
 func (c *CasbinAbacRequester) CheckAccessPermission() (bool, error) {
 	AbacModels := c.AbacModels
-	ok, err := c.Enforcer.Enforce(AbacModels.submodels, AbacModels.obj, AbacModels.act)
+	ok, err := c.Enforcer.Enforce(AbacModels.SubModel, AbacModels.Obj, AbacModels.Act)
 	return ok, err
 
 }
